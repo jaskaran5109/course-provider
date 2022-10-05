@@ -79,7 +79,7 @@ export const createLecture = catchAsyncError(async (req, res, next) => {
   const mycloud = await cloudinary.v2.uploader.upload(fileUri.content, {
     resource_type: "video",
   });
-
+  
   course.lectures.push({
     title,
     description,

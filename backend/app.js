@@ -1,6 +1,7 @@
 import express from "express";
 import { config } from "dotenv";
 import course from './routes/courseRoutes.js'
+import note from './routes/noteRoutes.js'
 import user from './routes/userRoutes.js'
 import payment from './routes/paymentRoutes.js'
 import other from './routes/otherRoutes.js'
@@ -26,6 +27,7 @@ app.use("/api/v1",course)
 app.use("/api/v1",user)
 app.use("/api/v1",payment)
 app.use("/api/v1",other)
+app.use("/api/v1",note)
 
 export default app;
 

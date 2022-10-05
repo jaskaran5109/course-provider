@@ -28,6 +28,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import { getMyProfile } from './redux/actions/user';
 import { ProtectedRoute } from 'protected-route-react';
 import Loader from './components/Layout/Loader/Loader';
+import Sidebar from './components/Layout/Sidebar/Sidebar';
+import Notes from './components/Notes/Notes';
+import NotePage from './components/NoteDetail/NotePage';
 
 function App() {
   const dispatch = useDispatch();
@@ -60,8 +63,10 @@ function App() {
           <Header isAuthenticated={isAuthenticated} user={user} />
           <Routes>
             <Route exact path="/" element={<Home />} />
+          
             <Route exact path="/courses" element={<Courses />} />
             <Route exact path="/contact" element={<Contact />} />
+            <Route exact path="/notes" element={<Notes />} />
             <Route
               exact
               path="/login"
@@ -130,6 +135,15 @@ function App() {
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
                   <CoursePage user={user}/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              exact
+              path="/note/:id"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <NotePage user={user}/>
                 </ProtectedRoute>
               }
             />

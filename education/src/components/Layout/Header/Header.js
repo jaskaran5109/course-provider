@@ -54,6 +54,7 @@ const Header = ({isAuthenticated=false,user}) => {
             <VStack spacing={'4'} alignItems="flex-start">
               <LinkButton url="/" title="Home" onClose={onClose}/>
               <LinkButton url="/courses" title="Courses" onClose={onClose}/>
+              <LinkButton url="/notes" title="Notes" onClose={onClose}/>
               <LinkButton url="/request" title="Request a course" onClose={onClose}/>
               <LinkButton url="/contact" title="Contact Us" onClose={onClose}/>
               <LinkButton url="/about" title="About" onClose={onClose}/>
