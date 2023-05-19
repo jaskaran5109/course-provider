@@ -30,12 +30,13 @@ import {
   deleteCourse,
   deleteLecture,
 } from '../../../redux/actions/admin';
-const AdminCourses = () => {
+const AdminCourses = ({ width }) => {
   const [courseIdss, setCourseId] = useState('');
   const [courseTitle, setCourseTitle] = useState('');
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { courses, lectures } = useSelector(state => state.courses);
   const { loading, error, message } = useSelector(state => state.admin);
+  const { user } = useSelector(state => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllCourses());
@@ -73,57 +74,123 @@ const AdminCourses = () => {
   };
 
   return (
-    <Grid minH="100vh" templateColumns={['1fr', '5fr 1fr']}>
-      <Box p={['0', '8']} overflow="auto">
-        <Heading
-          textTransform={'uppercase'}
-          my="16"
-          textAlign={['center', 'left']}
-        >
-          All Users
-        </Heading>
-        <TableContainer w={['100vw', 'full']}>
-          <Table variant="simple" size="lg">
-            <TableCaption>All available Courses in the Database</TableCaption>
-            <Thead>
-              <Tr>
-                <Th>Id</Th>
-                <Th>Poster</Th>
-                <Th>Title</Th>
-                <Th>Category</Th>
-                <Th>Creator</Th>
-                <Th isNumeric>Views</Th>
-                <Th isNumeric>Lectures</Th>
-                <Th isNumeric>Action</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {courses.map(item => (
-                <Row
-                  item={item}
-                  key={item._id}
-                  courseDetailsHandler={courseDetailsHandler}
-                  deleteCourseHandler={deleteCourseHandler}
-                  loading={loading}
-                />
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-        <CourseModel
-          isOpen={isOpen}
-          onClose={onClose}
-          id={courseIdss}
-          deleteHandler={deleteHandler}
-          addLectureHandler={addLectureHandler}
-          courseTitle={courseTitle}
-          lectures={lectures}
-          loading={loading}
-        />
-      </Box>
+    <>
+      {width < 900 ? (
+        <Grid minH="100vh" mt="10">
+          <Box p={['0', '8']} overflow="auto">
+            <HStack my="16" ml="2">
+              <Heading
+                textTransform={'uppercase'}
+                textAlign={['center', 'left']}
+              >
+                All Courses
+              </Heading>
+            </HStack>
+            <TableContainer w={['100vw', 'full']}>
+              <Table variant="simple" size="lg">
+                <TableCaption>
+                  All available Courses in the Database
+                </TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th>Id</Th>
+                    <Th>Poster</Th>
+                    <Th>Title</Th>
+                    <Th>Category</Th>
+                    <Th>Creator</Th>
+                    <Th isNumeric>Views</Th>
+                    <Th isNumeric>Lectures</Th>
+                    <Th isNumeric>Action</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {courses.map(
+                    item =>
+                      item.user === user._id && (
+                        <Row
+                          item={item}
+                          key={item._id}
+                          courseDetailsHandler={courseDetailsHandler}
+                          deleteCourseHandler={deleteCourseHandler}
+                          loading={loading}
+                        />
+                      )
+                  )}
+                </Tbody>
+              </Table>
+            </TableContainer>
+            <CourseModel
+              isOpen={isOpen}
+              onClose={onClose}
+              id={courseIdss}
+              deleteHandler={deleteHandler}
+              addLectureHandler={addLectureHandler}
+              courseTitle={courseTitle}
+              lectures={lectures}
+              loading={loading}
+            />
+          </Box>
+          <Sidebar />
+        </Grid>
+      ) : (
+        <Grid minH="100vh" templateColumns={['1fr', '5fr 1fr']}>
+          <Box p={['0', '8']} overflow="auto">
+            <Heading
+              textTransform={'uppercase'}
+              my="16"
+              textAlign={['center', 'left']}
+            >
+              All Courses
+            </Heading>
+            <TableContainer w={['100vw', 'full']}>
+              <Table variant="simple" size="lg">
+                <TableCaption>
+                  All available Courses in the Database
+                </TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th>Id</Th>
+                    <Th>Poster</Th>
+                    <Th>Title</Th>
+                    <Th>Category</Th>
+                    <Th>Creator</Th>
+                    <Th isNumeric>Views</Th>
+                    <Th isNumeric>Lectures</Th>
+                    <Th isNumeric>Action</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {courses.map(
+                    item =>
+                      item.user === user._id && (
+                        <Row
+                          item={item}
+                          key={item._id}
+                          courseDetailsHandler={courseDetailsHandler}
+                          deleteCourseHandler={deleteCourseHandler}
+                          loading={loading}
+                        />
+                      )
+                  )}
+                </Tbody>
+              </Table>
+            </TableContainer>
+            <CourseModel
+              isOpen={isOpen}
+              onClose={onClose}
+              id={courseIdss}
+              deleteHandler={deleteHandler}
+              addLectureHandler={addLectureHandler}
+              courseTitle={courseTitle}
+              lectures={lectures}
+              loading={loading}
+            />
+          </Box>
 
-      <Sidebar />
-    </Grid>
+          <Sidebar />
+        </Grid>
+      )}
+    </>
   );
 };
 

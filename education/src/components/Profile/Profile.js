@@ -19,7 +19,7 @@ import {
   useDisclosure,
   ModalHeader,
 } from '@chakra-ui/react';
-import { cancelSubscription, getMyProfile } from '../../redux/actions/user';
+import { getMyProfile } from '../../redux/actions/user';
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -33,7 +33,6 @@ const Profile = ({ user }) => {
   const dispatch = useDispatch();
   const { loading, message, error } = useSelector(state => state.profile);
   const {
-    loading: loading2,
     message: message2,
     error: error2,
   } = useSelector(state => state.subscription);
@@ -49,9 +48,9 @@ const Profile = ({ user }) => {
     await dispatch(removeFromPlaylist(id));
     dispatch(getMyProfile());
   };
-  const cancelSubscriptionHandler = () => {
-    dispatch(cancelSubscription());
-  };
+  // const cancelSubscriptionHandler = () => {
+  //   dispatch(cancelSubscription());
+  // };
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -104,7 +103,7 @@ const Profile = ({ user }) => {
             <Text fontWeight={'bold'}>Created At</Text>
             <Text>{user.createdAt.split('T')[0]}</Text>
           </HStack>
-          {user.role !== 'admin' && (
+          {/* {user.role !== 'admin' && (
             <HStack>
               <Text fontWeight={'bold'}>Subscription</Text>
               {user.subscription && user.subscription.status === 'active' ? (
@@ -121,7 +120,7 @@ const Profile = ({ user }) => {
                 </Link>
               )}
             </HStack>
-          )}
+          )} */}
           <Stack direction={['column', 'row']} alignItems="center">
             <Link to="/updateProfile">
               <Button>Update Profile</Button>

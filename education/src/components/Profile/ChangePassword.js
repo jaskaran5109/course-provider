@@ -3,7 +3,6 @@ import { Button, Container, Heading, Input, VStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { changePassword } from '../../redux/actions/profile';
-import { useNavigate } from 'react-router-dom';
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState();
   const [newPassword, setNewPassword] = useState();

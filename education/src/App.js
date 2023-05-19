@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Header from './components/Layout/Header/Header';
@@ -28,9 +28,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import { getMyProfile } from './redux/actions/user';
 import { ProtectedRoute } from 'protected-route-react';
 import Loader from './components/Layout/Loader/Loader';
-import Sidebar from './components/Layout/Sidebar/Sidebar';
 import Notes from './components/Notes/Notes';
 import NotePage from './components/NoteDetail/NotePage';
+import AdminNotes from './components/Admin/Notes/AdminNotes';
+import CreateNote from './components/Admin/CreateNote/CreateNote';
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,14 @@ function App() {
   window.addEventListener('contextmenu', e => {
     e.preventDefault();
   });
+  const [width, setWidth] = useState(window.innerWidth);
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -56,185 +65,204 @@ function App() {
   }, [dispatch]);
   return (
     <Router>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <Header isAuthenticated={isAuthenticated} user={user} />
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-          
-            <Route exact path="/courses" element={<Courses />} />
-            <Route exact path="/contact" element={<Contact />} />
-            <Route exact path="/notes" element={<Notes />} />
-            <Route
-              exact
-              path="/login"
-              element={
-                <ProtectedRoute
-                  isAuthenticated={!isAuthenticated}
-                  redirect="/profile"
-                >
-                  <Login />
-                </ProtectedRoute>
-              }
-            />
-            <Route exact path="/about" element={<About />} />
-            <Route
-              exact
-              path="/register"
-              element={
-                <ProtectedRoute
-                  isAuthenticated={!isAuthenticated}
-                  redirect="/profile"
-                >
-                  <Register />
-                </ProtectedRoute>
-              }
-            />
-            <Route exact path="/request" element={<Request />} />
-            <Route
-              exact
-              path="/forgotpassword"
-              element={
-                <ProtectedRoute
-                  isAuthenticated={!isAuthenticated}
-                  redirect="/profile"
-                >
-                  <ForgetPassword />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/resetpassword/:token"
-              element={
-                <ProtectedRoute
-                  isAuthenticated={!isAuthenticated}
-                  redirect="/profile"
-                >
-                  <ResetPassword />
-                </ProtectedRoute>
-              }
-            />
+      <Header isAuthenticated={isAuthenticated} user={user} width={width} />
+      <Routes>
+        <Route exact path="/" element={<Home width={width} />} />
+        <Route exact path="/courses" element={<Courses />} />
+        <Route exact path="/contact" element={<Contact />} />
+        <Route exact path="/notes" element={<Notes />} />
+        <Route
+          exact
+          path="/login"
+          element={
+            <ProtectedRoute
+              isAuthenticated={!isAuthenticated}
+              redirect="/profile"
+            >
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route exact path="/about" element={<About />} />
+        <Route
+          exact
+          path="/register"
+          element={
+            <ProtectedRoute
+              isAuthenticated={!isAuthenticated}
+              redirect="/profile"
+            >
+              <Register />
+            </ProtectedRoute>
+          }
+        />
+        <Route exact path="/request" element={<Request />} />
+        <Route
+          exact
+          path="/forgotpassword"
+          element={
+            <ProtectedRoute
+              isAuthenticated={!isAuthenticated}
+              redirect="/profile"
+            >
+              <ForgetPassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/resetpassword/:token"
+          element={
+            <ProtectedRoute
+              isAuthenticated={!isAuthenticated}
+              redirect="/profile"
+            >
+              <ResetPassword />
+            </ProtectedRoute>
+          }
+        />
 
-            <Route
-              exact
-              path="/subscribe"
-              element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <Subscribe user={user} />
-                </ProtectedRoute>
-              }
-            />
-            <Route exact path="/paymentsuccess" element={<PaymentSuccess />} />
-            <Route exact path="/paymentfail" element={<PaymentFail />} />
-            <Route
-              exact
-              path="/course/:id"
-              element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <CoursePage user={user}/>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/note/:id"
-              element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <NotePage user={user}/>
-                </ProtectedRoute>
-              }
-            />
-            <Route exact path="*" element={<NotFound />} />
+        <Route
+          exact
+          path="/subscribe/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Subscribe user={user} />
+            </ProtectedRoute>
+          }
+        />
+        <Route exact path="/paymentsuccess" element={<PaymentSuccess />} />
+        <Route exact path="/paymentfail" element={<PaymentFail />} />
+        <Route
+          exact
+          path="/course/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <CoursePage user={user} width={width} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/note/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <NotePage user={user} width={width} />
+            </ProtectedRoute>
+          }
+        />
+        <Route exact path="*" element={<NotFound />} />
 
-            <Route
-              exact
-              path="/profile"
-              element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <Profile user={user} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/changepassword"
-              element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <ChangePassword />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/updateprofile"
-              element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <UpdateProfile user={user} />
-                </ProtectedRoute>
-              }
-            />
+        <Route
+          exact
+          path="/profile"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Profile user={user} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/changepassword"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <ChangePassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/updateprofile"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <UpdateProfile user={user} />
+            </ProtectedRoute>
+          }
+        />
 
-            {/* ADMIN Routes */}
-            <Route
-              exact
-              path="/admin/dashboard"
-              element={
-                <ProtectedRoute
-                  adminRoute={true}
-                  isAuthenticated={isAuthenticated}
-                  isAdmin={user && user.role === 'admin'}
-                >
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/admin/createcourse"
-              element={
-                <ProtectedRoute
-                  adminRoute={true}
-                  isAuthenticated={isAuthenticated}
-                  isAdmin={user && user.role === 'admin'}
-                >
-                  <CreateCourse />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/admin/users"
-              element={
-                <ProtectedRoute
-                  adminRoute={true}
-                  isAuthenticated={isAuthenticated}
-                  isAdmin={user && user.role === 'admin'}
-                >
-                  <Users />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/admin/courses"
-              element={
-                <ProtectedRoute
-                  adminRoute={true}
-                  isAuthenticated={isAuthenticated}
-                  isAdmin={user && user.role === 'admin'}
-                >
-                  <AdminCourses />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-          <Footer />
-          <Toaster />
-        </>
-      )}
+        {/* ADMIN Routes */}
+        <Route
+          exact
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute
+              adminRoute={true}
+              isAuthenticated={isAuthenticated}
+              isAdmin={user && user.role === 'admin'}
+            >
+              <Dashboard width={width} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/admin/createcourse"
+          element={
+            <ProtectedRoute
+              adminRoute={true}
+              isAuthenticated={isAuthenticated}
+              isAdmin={user && user.role === 'admin'}
+            >
+              <CreateCourse width={width} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/admin/createnote"
+          element={
+            <ProtectedRoute
+              adminRoute={true}
+              isAuthenticated={isAuthenticated}
+              isAdmin={user && user.role === 'admin'}
+            >
+              <CreateNote width={width} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/admin/users"
+          element={
+            <ProtectedRoute
+              adminRoute={true}
+              isAuthenticated={isAuthenticated}
+              isAdmin={user && user.role === 'admin'}
+            >
+              <Users width={width} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/admin/courses"
+          element={
+            <ProtectedRoute
+              adminRoute={true}
+              isAuthenticated={isAuthenticated}
+              isAdmin={user && user.role === 'admin'}
+            >
+              <AdminCourses width={width} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/admin/notes"
+          element={
+            <ProtectedRoute
+              adminRoute={true}
+              isAuthenticated={isAuthenticated}
+              isAdmin={user && user.role === 'admin'}
+            >
+              <AdminNotes width={width} />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Footer />
+      <Toaster />
     </Router>
   );
 }

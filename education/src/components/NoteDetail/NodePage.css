@@ -1,0 +1,18 @@
+.grid{
+    display: flex;
+    width: 100%;
+}
+.sidebar1{
+    flex:0.8;
+}
+.sidebar2{
+    flex:0.2;
+}
+@media screen and (max-width: 900px) {
+    .sidebar2 {
+        display:none !important;
+    }
+    .sidebar1{
+        flex:1;
+    }
+ }

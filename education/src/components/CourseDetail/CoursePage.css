@@ -1,0 +1,12 @@
+.course-lecture {
+    display: flex;
+    margin-top: 30px;
+    width: 100%;
+}
+
+@media screen and (max-width:800px) {
+    .course-lecture {
+        display: flex;
+        flex-direction: column !important;
+    }
+}

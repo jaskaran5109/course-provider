@@ -9,9 +9,9 @@ export const adminReducer = createReducer(
     getAdminStatsSuccess: (state, action) => {
       state.loading = false;
       state.stats = action.payload.stats;
-      state.usersCount = action.payload.usersCount;
-      state.subscriptionCount = action.payload.subscriptionCount;
       state.viewsCount = action.payload.viewsCount;
+      state.subscriptionCount = action.payload.subscriptionCount;
+      state.usersCount = action.payload.usersCount;
       state.subscriptionPercentage = action.payload.subscriptionPercentage;
       state.viewsPercentage = action.payload.viewsPercentage;
       state.usersPercentage = action.payload.usersPercentage;
@@ -23,6 +23,7 @@ export const adminReducer = createReducer(
       state.loading = false;
       state.error = action.payload;
     },
+
     getAllUsersRequest: state => {
       state.loading = true;
     },
@@ -67,6 +68,17 @@ export const adminReducer = createReducer(
       state.loading = false;
       state.error = action.payload;
     },
+    createNoteRequest: state => {
+      state.loading = true;
+    },
+    createNoteSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    createNoteFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
     deleteCourseRequest: state => {
       state.loading = true;
     },
@@ -75,6 +87,17 @@ export const adminReducer = createReducer(
       state.message = action.payload;
     },
     deleteCourseFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    deleteNoteRequest: state => {
+      state.loading = true;
+    },
+    deleteNoteSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    deleteNoteFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
@@ -95,6 +118,17 @@ export const adminReducer = createReducer(
       state.loading = false;
       state.error = action.payload;
     },
+    addNoteNoteRequest: state => {
+      state.loading = true;
+    },
+    addNoteNoteSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    addNoteNoteFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
     deleteLectureRequest: state => {
       state.loading = true;
     },
@@ -103,6 +137,17 @@ export const adminReducer = createReducer(
       state.message = action.payload;
     },
     deleteLectureFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    deleteNoteNoteRequest: state => {
+      state.loading = true;
+    },
+    deleteNoteNoteSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    deleteNoteNoteFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },

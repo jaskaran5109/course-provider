@@ -1,7 +1,6 @@
 .container {
     height: 100%;
-    padding: 5rem;
-    box-sizing: border-box;
+    padding: 2rem;
 }
 
 .homeImage {
@@ -9,56 +8,56 @@
     animation: imageAnimation 1s infinite ease-in-out alternate;
 }
 
+.secondImage {
+    filter: drop-shadow(0 40px 10px rgba(0, 0, 0, 0.3));
+}
+
+.home-first-div {
+    display: flex;
+    flex-direction: row !important;
+}
+
+.home-second-div {
+    display: flex;
+    flex-direction: row !important;
+}
+
+.heading-course {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row !important;
+    align-items: center;
+}
+.stack-student{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row !important;
+    justify-content: center;
+}
 @keyframes imageAnimation {
     to {
         transform: translateY(-10px);
     }
 }
 
-.brandsBanner {
-    color: white;
-    font-size: 3rem;
-    transition: color 0.5s;
-}
 
-.brandsBanner>svg:hover {
-    color: rgb(225, 225, 0);
-}
 
-.continer2 {
-    height: 100vh;
-    width: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.container2 video {
-    border: 1px solid rgba(0, 0, 0, 0.18);
-    width: 60% !important;
-    margin: auto;
-    margin-top: 100px;
-    margin-bottom: 100px;
-
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.175);
-    outline: none;
-}
-
-@media screen and (max-width:600px) {
-    .container2 {
-        height: unset;
-        padding: 4vh 0;
+@media screen and (max-width:800px) {
+    .home-second-div {
+        display: flex;
+        flex-direction: column !important;
     }
-
-    .container2 video {
-        width: 100%;
+    .heading-course {
+        display: flex;
+        flex-direction: column !important;
+        align-items: flex-start;
+        text-align: left;
     }
 }
 
 .course {
     width: 250px;
-    margin-bottom: 1rem;
     transition: all 0.5s;
 }
 

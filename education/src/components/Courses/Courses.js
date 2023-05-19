@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { getAllCourses } from '../../redux/actions/course';
 import { addToPlaylist } from '../../redux/actions/profile';
 import { getMyProfile } from '../../redux/actions/user';
+import Loader from '../Layout/Loader/Loader';
 
 const Courses = () => {
   const [keyword, setKeyword] = useState('');
@@ -25,6 +26,7 @@ const Courses = () => {
   );
   const dispatch = useDispatch();
   const categories = [
+    'All',
     'Web Development',
     'Artificial Intelligence',
     'Data Structure & Algorithms',
@@ -59,38 +61,48 @@ const Courses = () => {
       />
       <HStack overflowX={'auto'} paddingY="8">
         {categories.map((item, index) => (
-          <Button minWidth={'60'} onClick={() => setCategory(item)} key={index}>
+          <Button
+            minWidth={'60'}
+            onClick={() => {
+              if (item === 'All') setCategory('');
+              else setCategory(item);
+            }}
+            key={index}
+          >
             <Text>{item}</Text>
           </Button>
         ))}
       </HStack>
-
-      <Stack
-        direction={['column', 'row']}
-        flexWrap="wrap"
-        justifyContent={['flex-start', 'space-evenly']}
-        alignItems={['center', 'flex-start']}
-        mt="5"
-      >
-        {courses.length > 0 ? (
-          courses.map((item, index) => (
-            <CourseCard
-              key={item._id}
-              title={item.title}
-              description={item.description}
-              views={item.views}
-              imageSrc={item.poster.url}
-              id={item._id}
-              creator={item.createdBy}
-              lectureCount={item.numOfVideos}
-              addToPlaylist={addToPlaylistHandler}
-              loading={loading}
-            />
-          ))
-        ) : (
-          <Heading opacity={'0.5'}>No Course found</Heading>
-        )}
-      </Stack>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Stack
+          direction={['column', 'row']}
+          flexWrap="wrap"
+          justifyContent={['flex-start', 'space-evenly']}
+          alignItems={['center', 'flex-start']}
+          mt="5"
+        >
+          {courses.length > 0 ? (
+            courses.map((item, index) => (
+              <CourseCard
+                key={item._id}
+                title={item.title}
+                description={item.description}
+                views={item.views}
+                imageSrc={item.poster.url}
+                id={item._id}
+                creator={item.createdBy}
+                lectureCount={item.numOfVideos}
+                addToPlaylist={addToPlaylistHandler}
+                loading={loading}
+              />
+            ))
+          ) : (
+            <Heading opacity={'0.5'}>No Course found</Heading>
+          )}
+        </Stack>
+      )}
     </Container>
   );
 };
@@ -109,7 +121,11 @@ const CourseCard = ({
 }) => {
   return (
     <VStack className="course" alignItems={['center', 'flex-start']}>
-      <Image src={imageSrc} boxSize="60" objectFit={'contain'} />
+      <Image
+        src={imageSrc}
+        objectFit={'contain'}
+        style={{ width: '250px', height: '150px' }}
+      />
       <Heading
         size={'sm'}
         textAlign={['center', 'left']}
@@ -139,9 +155,9 @@ const CourseCard = ({
       <Heading
         size={'xs'}
         textTransform={'uppercase'}
-      >{`Views - ${views}`}</Heading>
+      >{`Users - ${views}`}</Heading>
       <Stack direction={['column', 'row']} alignItems="center">
-        <Link to={`/course/${id}`}>
+        <Link to={`/course/${id}`} state={{ name: `${title}` }}>
           <Button colorScheme={'yellow'}>Watch Now</Button>
         </Link>
         <Button

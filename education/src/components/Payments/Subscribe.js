@@ -12,9 +12,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { server } from '../../redux/store';
 import { buySubscription } from '../../redux/actions/user';
+import { useParams } from 'react-router-dom';
 const Subscribe = ({ user }) => {
   const dispatch = useDispatch();
   const [key, setKey] = useState('');
+  const params = useParams();
   const { loading, error, subscriptionId } = useSelector(
     state => state.subscription
   );
@@ -41,7 +43,7 @@ const Subscribe = ({ user }) => {
           description: 'Get access to all premium content',
           subscription_id: subscriptionId,
           image: '',
-          callback_url: `${server}/paymentVerification`,
+          callback_url: `${server}/paymentVerification/${params.id}`,
           prefill: {
             name: user.name,
             email: user.email,

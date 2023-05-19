@@ -1,43 +1,50 @@
 import React from 'react';
 import {
   Avatar,
-  Box,
-  Button,
   Container,
   Heading,
-  HStack,
   Stack,
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
-import Vd from '../../assets/Videos/video.mp4';
-import { RiSecurePaymentFill } from 'react-icons/ri';
-import terms from '../../assets/Docs/terms'
 const About = () => {
   return (
-    <Container maxWidth={'container.lg'} padding="16" boxShadow="dark-lg">
+    <Container
+      maxWidth={'container.lg'}
+      padding="16"
+      marginTop="50px"
+      marginBottom={'100px'}
+      boxShadow="1px 3px 5px 1px #8185EA"
+    >
       <Heading textAlign={['center', 'left']}>About Us</Heading>
       <Founder />
-      <Stack m="8" direction={['column', 'row']} alignItems="center">
-        <Text fontFamily="cursive" m="8" textAlign={['center', 'left']}>
-          We are e-learning platform that provides course to students for better
-          future
+      <Stack direction={['column', 'row']} alignItems="center">
+        <Text fontFamily="cursive" m="0" textAlign={'center'}>
+          We want to ensure that our students have the opportunity to access our
+          courses regardless of their financial situation. Our team of dedicated
+          support staff is always available to help you with any questions or
+          issues you may have. We want to ensure that your learning experience
+          is as smooth and enjoyable as possible. We are passionate about
+          education and believe that it is a powerful tool for personal and
+          professional growth. We are committed to providing our students with
+          the highest quality education and support to help them achieve their
+          goals. Thank you for considering our online course provider. We look
+          forward to helping you achieve your learning goals!
         </Text>
-        <Link to="/subscribe">
+        {/* <Link to="/subscribe">
           <Button variant="ghost" colorScheme={'yellow'}>
             Checkout Our Plan
           </Button>
-        </Link>
+        </Link> */}
       </Stack>
-      <VidePlayer />
-      <TAndC terms={terms} />
+      {/* <VidePlayer /> */}
+      {/* <TAndC terms={terms} />
       <HStack my="4" p="4">
         <RiSecurePaymentFill />
         <Heading size={'xs'} fontFamily="sans-serif" textTransform="uppercase">
           Payment is secure by Razorpay
         </Heading>
-      </HStack>
+      </HStack> */}
     </Container>
   );
 };
@@ -62,34 +69,36 @@ const Founder = () => (
   </Stack>
 );
 
-const VidePlayer = () => (
-  <Box>
-    <video
-      autoPlay
-      muted
-      controls
-      controlsList="nodownload nofullscreen noremoteplayback"
-      disablePictureInPicture
-      disableRemotePlayback
-      src={Vd}
-    ></video>
-  </Box>
-);
+// const VidePlayer = () => (
+//   <Box>
+//     <video
+//       autoPlay
+//       muted
+//       controls
+//       controlsList="nodownload nofullscreen noremoteplayback"
+//       disablePictureInPicture
+//       disableRemotePlayback
+//       src={Vd}
+//     ></video>
+//   </Box>
+// );
 
-const TAndC = props => (
-  <Box>
-    <Heading size="md" my="4" textAlign={['center', 'left']}>
-      Terms & Condition
-    </Heading>
-    <Box h="sm" p="4" overflowY="scroll">
-      <Text
-        textAlign={['center', 'left']}
-        letterSpacing="widest"
-        fontFamily="heading"
-      >
-        {props.terms}
-      </Text>
-      <Heading mt="4" size="xs">Refund only applicable for cancellation within 7 days</Heading>
-    </Box>
-  </Box>
-);
+// const TAndC = props => (
+//   <Box>
+//     <Heading size="md" my="4" textAlign={['center', 'left']}>
+//       Terms & Condition
+//     </Heading>
+//     <Box h="sm" p="4" overflowY="scroll">
+//       <Text
+//         textAlign={['center', 'left']}
+//         letterSpacing="widest"
+//         fontFamily="heading"
+//       >
+//         {props.terms}
+//       </Text>
+//       <Heading mt="4" size="xs">
+//         Refund only applicable for cancellation within 7 days
+//       </Heading>
+//     </Box>
+//   </Box>
+// );

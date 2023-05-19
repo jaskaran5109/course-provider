@@ -25,7 +25,30 @@ export const createCourse = formData => async dispatch => {
     });
   }
 };
+export const createNote = formData => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-type': 'multipart/form-data',
+      },
+      withCredentials: true,
+    };
+    dispatch({ type: 'createNoteRequest' });
 
+    const { data } = await axios.post(
+      `${server}/create/note`,
+      formData,
+      config
+    );
+
+    dispatch({ type: 'createNoteSuccess', payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: 'createNoteFail',
+      payload: error.response.data.message,
+    });
+  }
+};
 export const deleteCourse = id => async dispatch => {
   try {
     const config = {
@@ -43,7 +66,23 @@ export const deleteCourse = id => async dispatch => {
     });
   }
 };
+export const deleteNote = id => async dispatch => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+    dispatch({ type: 'deleteNoteRequest' });
 
+    const { data } = await axios.delete(`${server}/note/${id}`, config);
+
+    dispatch({ type: 'deleteNoteSuccess', payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: 'deleteNoteFail',
+      payload: error.response.data.message,
+    });
+  }
+};
 export const addLecture = (id, formData) => async dispatch => {
   try {
     const config = {
@@ -68,6 +107,30 @@ export const addLecture = (id, formData) => async dispatch => {
   }
 };
 
+export const addNoteNote = (id, formData) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-type': 'multipart/form-data',
+      },
+      withCredentials: true,
+    };
+    dispatch({ type: 'addNoteNoteRequest' });
+    const { data } = await axios.post(
+      `${server}/note/${id}`,
+      formData,
+      config
+    );
+
+    dispatch({ type: 'addNoteNoteSuccess', payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: 'addNoteNoteFail',
+      payload: error.response.data.message,
+    });
+  }
+};
+
 export const deleteLecture = (courseId, lectureId) => async dispatch => {
   try {
     const config = {
@@ -83,6 +146,25 @@ export const deleteLecture = (courseId, lectureId) => async dispatch => {
   } catch (error) {
     dispatch({
       type: 'deleteLectureFail',
+      payload: error.response.data.message,
+    });
+  }
+};
+export const deleteNoteNote = (noteId, notesId) => async dispatch => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+    dispatch({ type: 'deleteNoteNoteRequest' });
+    const { data } = await axios.delete(
+      `${server}/delnotes?noteId=${noteId}&notesId=${notesId}`,
+      config
+    );
+
+    dispatch({ type: 'deleteNoteNoteSuccess', payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: 'deleteNoteNoteFail',
       payload: error.response.data.message,
     });
   }
@@ -138,12 +220,13 @@ export const deleteUser = id => async dispatch => {
     });
   }
 };
-export const getDashboardStats = id => async dispatch => {
+export const getDashboardStats = () => async dispatch => {
   try {
     const config = {
       withCredentials: true,
     };
     dispatch({ type: 'getAdminStatsRequest' });
+
     const { data } = await axios.get(`${server}/admin/stats`, config);
 
     dispatch({ type: 'getAdminStatsSuccess', payload: data });

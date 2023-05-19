@@ -11,6 +11,7 @@ import { RiCheckboxCircleFill } from 'react-icons/ri';
 import {Link, useSearchParams} from 'react-router-dom'
 const PaymentSuccess = () => {
   const search=useSearchParams()[0].get("reference")
+  const courseId=useSearchParams()[0].get("courseId")
   return (
     <Container h="100vh" p="16">
       <Heading my="8" textAlign={'center'}>
@@ -36,8 +37,8 @@ const PaymentSuccess = () => {
             </Heading>
           </VStack>
         </Box>
-        <Link to="/profile">
-          <Button variant={'ghost'}>Go To Profile</Button>
+        <Link to={`/course/${courseId}`}>
+          <Button variant={'ghost'}>Go To Course</Button>
         </Link >
         <Heading size="xs">{`Reference: ${search}`}</Heading>
       </VStack>
